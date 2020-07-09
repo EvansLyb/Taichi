@@ -50,9 +50,8 @@ class AboutViewController: NSViewController {
     }
     
     
-    @IBAction func dismissAbout(_ sender: Any) {
-        guard let appDelegate = NSApplication.shared.delegate as? AppDelegate, let itemManager = appDelegate.statusItemManager else { return }
-        itemManager.hideAbout()
+    @IBAction func quit(_ sender: Any) {
+        NSApplication.shared.terminate(self)
     }
     
     @IBAction func register(_ sender: Any) {

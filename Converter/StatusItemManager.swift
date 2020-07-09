@@ -17,10 +17,10 @@ class StatusItemManager: NSObject {
     var popover: NSPopover?
 
     var converterVC: ConverterViewController?
+    var aboutVC: AboutViewController?
     
     
     // MARK: - Init
-    
     override init() {
         super.init()
 
@@ -39,7 +39,6 @@ class StatusItemManager: NSObject {
     
     
     // MARK: - Fileprivate Methods
-    
     fileprivate func initStatusItem() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         let itemImageName = NSImage.Name(rawValue: "degrees")
@@ -48,7 +47,7 @@ class StatusItemManager: NSObject {
         statusItem?.button?.image = itemImage
         
         statusItem?.button?.target = self
-        statusItem?.button?.action = #selector(showConverterVC)
+        statusItem?.button?.action = #selector(showAbout)
     }
  
     
@@ -57,7 +56,7 @@ class StatusItemManager: NSObject {
         popover?.behavior = .transient
     }
     
-        
+    
     @objc fileprivate func showConverterVC() {
         guard let popover = popover, let button = statusItem?.button else { return }
 
@@ -71,29 +70,18 @@ class StatusItemManager: NSObject {
         popover.contentViewController = converterVC
         popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
     }
- 
-    
     
     // MARK: - Internal Methods
-
-    func showAbout() {
-        guard let popover = popover else { return }
+    @objc fileprivate func showAbout() {
+        guard let popover = popover, let button = statusItem?.button else { return }
         
-        popover.contentViewController?.view.isHidden = true
-        
-        let storyboardName = NSStoryboard.Name(rawValue: "Main")
-        let storyboard = NSStoryboard(name: storyboardName, bundle: nil)
-        guard let vc = storyboard.instantiateController(withIdentifier: .init("aboutID")) as? AboutViewController else { return }
-
-        popover.contentViewController = vc
-    }
-    
-    
-    func hideAbout() {
-        guard let popover = popover else { return }
-        popover.contentViewController?.view.isHidden = true
-        popover.contentViewController?.dismiss(nil)
-        showConverterVC()
-        popover.contentViewController?.view.isHidden = false
+        if aboutVC == nil {
+            let storyboardName = NSStoryboard.Name(rawValue: "Main")
+            let storyboard = NSStoryboard(name: storyboardName, bundle: nil)
+            guard let vc = storyboard.instantiateController(withIdentifier: .init("aboutID")) as? AboutViewController else { return }
+            aboutVC = vc
+        }
+        popover.contentViewController = aboutVC
+        popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
     }
 }

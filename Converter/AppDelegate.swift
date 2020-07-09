@@ -32,10 +32,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
             
             hotKey.keyDownHandler = {
-                print(hotKey)
-                print("hotKey")
-                //        let apps = NSWorkspace.shared.runningApplications
-                //        print(apps[0].bundleIdentifier)
+                let runningApps = NSWorkspace.shared.runningApplications
+                print(runningApps[0])
             }
         }
     }

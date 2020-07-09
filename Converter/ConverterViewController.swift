@@ -43,10 +43,10 @@ class ConverterViewController: NSViewController {
     }
     
     
-    @IBAction func showAbout(_ sender: Any) {
-        guard let appDelegate = NSApplication.shared.delegate as? AppDelegate, let itemManager = appDelegate.statusItemManager else { return }
-        itemManager.showAbout()
-    }
+//    @IBAction func showAbout(_ sender: Any) {
+//        guard let appDelegate = NSApplication.shared.delegate as? AppDelegate, let itemManager = appDelegate.statusItemManager else { return }
+//        itemManager.showAbout()
+//    }
     
     
     @IBAction func quit(_ sender: Any) {
